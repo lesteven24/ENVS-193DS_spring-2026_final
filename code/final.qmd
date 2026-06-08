@@ -43,11 +43,17 @@ In part 1, they used a logistic regression, which is a generalized linear model 
 
 ## b.
 
+### Part 1.
 
+The distance to water edge does seem to predict the probability of American Avocet microhabitat use.  
+
+### Part 2. 
+
+There does seem to be a relationship between bird species (American Avocet, Forster’s Tern, Black-necked Stilt) and habitat (managed pond, non-tidal marsh, salt pond, tidal marsh, or tidal mudflat).  
 
 ## c.
 
-
+One additional variable that could influence the probability of American Avocet microhabitat use is the type of behavior they were displaying, which is a categorical variable.  For the American Avocets, the researchers put behavior into four main categories: feeding (searching, probing, and dunking bills into the water), roosting (standing, sitting, preening), breeding (nest-building, incubating, brooding chicks, alarm calling, breeding display, copulation, or predator distraction display), and other (walking, swimming, or flushing).  This variable might influence American Avocet habitat use as different behaviors can change the duration of how long they remain in a particular habitat.    
 
 # Problem 2. Data analysis 
 
