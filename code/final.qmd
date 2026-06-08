@@ -17,6 +17,8 @@ include-in-header:
 
 # Homework set up
 
+[GitHub repo link](https://github.com/lesteven24/ENVS-193DS_spring-2026_final.git)
+
 ```{r}
 
 #read in packages
@@ -28,6 +30,8 @@ library(ggplot2)
 library(ggeffects)
 library(flextable)
 library(here)
+#stored nest data as an object called nest
+nest <- read_csv(here("data", "nest_data_final.csv"))
 
 ```
 
@@ -35,7 +39,7 @@ library(here)
 
 ## a.
 
-
+In part 1, they used a logistic regression, which is a generalized linear model with a binomial error distribution.  In part 2, they used a chi-square test, which is used to identify if there is a relationship between two categorical variables.  
 
 ## b.
 
