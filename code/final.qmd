@@ -15,9 +15,9 @@ include-in-header:
         \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
 ---
 
-# Homework set up
-
 [GitHub repo link](https://github.com/lesteven24/ENVS-193DS_spring-2026_final.git)
+
+# Homework set up
 
 ```{r}
 
@@ -30,8 +30,8 @@ library(ggplot2)
 library(ggeffects)
 library(flextable)
 library(here)
-#stored nest data as an object called nest
-nest <- read_csv(here("data", "nest_data_final.csv"))
+#stored nest data as an object called nests
+nests <- read_csv(here("data", "nest_data_final.csv"))
 
 ```
 
@@ -59,7 +59,33 @@ One additional variable that could influence the probability of American Avocet 
 
 ## a.
 
+```{r}
 
+#created new object from nests
+nests_clean <- nests |>
+#cleaned column names    
+  clean_names() |> 
+#selected for tree height, ant_species, and case_control columns 
+  select(case_control, ant_species, height_cm) |> 
+#reordered names in ant_species column 
+  mutate(ant_species = as_factor(ant_species),
+         ant_species = fct_relevel(ant_species,
+                                   "AB",
+                                   "RRB",
+                                   "BBR")) |> 
+#filtered ant_species column to only have three required species  
+  filter(ant_species %in% c("AB", "RRB", "BBR")) |> 
+#created new column with full scientific name for each ant species 
+  mutate(scientific_name = case_match(ant_species,
+    "AB" ~ "Crematogaster sjostedti",
+    "RRB" ~ "Crematogaster mimosae",
+    "BBR" ~ "Crematogaster nigriceps")) 
+#displayed structure of nests_clean data frame
+str(nests_clean)
+#displayed 10 random rows from the data frame but made it separate from all codes above by using separate pipe operator 
+nests_clean |>  slice_sample(n = 10)
+
+```
 
 ## b.
 
@@ -127,5 +153,6 @@ One additional variable that could influence the probability of American Avocet 
 
 
 
-## g.
+## g. 
 
+COMPLETED ALREADY
