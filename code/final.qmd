@@ -1,0 +1,121 @@
+---
+title: "ENVS 193DS Final"
+date: "6/4/26" 
+author: "Steven Le"
+format: 
+  pdf:
+    toc: true 
+execute:
+  warning: false
+  message: false
+editor: source
+include-in-header:
+      text: |
+        \usepackage{fvextra}
+        \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
+---
+
+# Homework set up
+
+```{r}
+
+#read in packages
+library(tidyverse)
+library(here)
+library(janitor)
+library(readxl)
+library(ggplot2)
+library(ggeffects)
+library(flextable)
+library(here)
+
+```
+
+# Problem 1. Research writing 
+
+## a.
+
+
+
+## b.
+
+
+
+## c.
+
+
+
+# Problem 2. Data analysis 
+
+## a.
+
+
+
+## b.
+
+
+
+## c.
+
+
+
+## d.
+
+
+
+## e.
+
+
+
+## f.
+
+
+
+## g.
+
+
+
+## h.
+
+
+
+## i.
+
+
+
+## j.
+
+
+
+## k.
+
+
+
+# Problem 3. Affective and exploratory visualizations 
+
+## a.
+
+
+
+## b.
+
+
+
+## c.
+
+
+
+## d.
+
+
+
+## e.
+
+
+
+## f.
+
+
+
+## g.
+
