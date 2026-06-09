@@ -40,27 +40,27 @@ nests <- read_csv(here("data", "nest_data_final.csv"))
 
 # Problem 1. Research writing 
 
-## a.
+## a. Transparent statistical methods
 
 In part 1, they used a logistic regression, which is a generalized linear model with a binomial error distribution.  In part 2, they used a chi-square test, which is used to identify if there is a relationship between two categorical variables.  
 
-## b.
+## b. Suggestions for rewriting
 
 ### Part 1.
 
 The distance to water edge does seem to predict the probability of American Avocet microhabitat use.  
 
-### Part 2. 
+### Part 2.  
 
 There does seem to be a relationship between bird species (American Avocet, Forster’s Tern, Black-necked Stilt) and habitat (managed pond, non-tidal marsh, salt pond, tidal marsh, or tidal mudflat).  
 
-## c.
+## c. Further analysis 
 
 One additional variable that could influence the probability of American Avocet microhabitat use is the type of behavior they were displaying, which is a categorical variable.  For the American Avocets, the researchers put behavior into four main categories: feeding (searching, probing, and dunking bills into the water), roosting (standing, sitting, preening), breeding (nest-building, incubating, brooding chicks, alarm calling, breeding display, copulation, or predator distraction display), and other (walking, swimming, or flushing).  This variable might influence American Avocet habitat use as different behaviors can change the duration of how long they remain in a particular habitat.    
 
 # Problem 2. Data analysis 
 
-## a.
+## a. Clean and wrangle
 
 ```{r}
 
@@ -90,22 +90,22 @@ nests_clean |>  slice_sample(n = 10)
 
 ```
 
-## b.
+## b. Response variable
 
 For the case_control column, the 1s mean that a tree does contain a nest and the 0s mean that a tree does not contain a nest (is an "available" tree for comparison).  
 
-## c.
+## c. Purpose of study
 
 Tree height is a continuous (numeric) variable and could influence the probability of nest occurrence as if tree height were to increase, the probability of nest occurrence would increase because there would most likely be less predators higher up on trees (Results section, paragraph 2).  Acacia ant species is a categorical (nominal variable) and could influence the probability of nest occurrence as if a particular ant species at a nesting site was more aggressive, the probability of nest occurrence could increase as it would reduce nest predation risks (Discussion section, paragraph 1).  
 
-## d.
+## d. Table of models
 
 | Model number | Tree height | Ant species |            Model description             |
 |--------------|:-----------:|:-----------:|:---------------------------------------: |  
 | 0            |      X      |      X      | All predictors (no interaction term, +)  |
 | 1            |      X      |      X      | All predictors (interaction term, *)     | 
 
-## e.
+## e. Run the models
 
 ```{r}
 
@@ -123,7 +123,7 @@ model1 <- glm(case_control ~ height_cm * scientific_name,
 
 ```
 
-## f.
+## f. Select the best model
 
 ```{r}
 
@@ -138,52 +138,52 @@ AICc(
 
 The best model as determined by Akaike's Information Criterion (AIC) was the model where tree height (cm) and acacia ant species were interacting terms for the probability of nest occurrence.  
 
-## g.
+## g. Check the diagnostics
 
 
 
-## h.
+## h. Visualize the model predictions
 
 
 
-## i.
+## i. Write a caption for your figure 
 
 
 
-## j.
+## j. Calculate model predictions
 
 
 
-## k.
+## k. Interpret your results 
 
 
 
 # Problem 3. Affective and exploratory visualizations 
 
-## a.
+## a. Comparing visualizations
 
 
 
-## b.
+## b. Designing an analysis
 
 
 
-## c.
+## c. Check any assumptions and run your analysis
 
 
 
-## d.
+## d. Create a visualization
 
 
 
-## e.
+## e. Write a caption
 
 
 
-## f.
+## f. Write about your results
 
 
 
-## g. 
+## g. Sharing your affective visualization 
 
 COMPLETED ALREADY
