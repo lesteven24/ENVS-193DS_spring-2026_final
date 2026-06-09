@@ -89,11 +89,11 @@ nests_clean |>  slice_sample(n = 10)
 
 ## b.
 
-
+For the case_control column, the 1s mean that a tree does contain a nest and the 0s mean that a tree does not contain a nest (is an "available" tree for comparison).  
 
 ## c.
 
-
+Tree height is a continuous (numeric) variable and could influence the probability of nest occurrence as if tree height were to increase, the probability of nest occurrence would increase because there would most likely be less predators higher up on trees (Results section, paragraph 2).  Acacia ant species is a categorical (nominal variable) and could influence the probability of nest occurrence as if a particular ant species at a nesting site was more aggressive, the probability of nest occurrence could increase as it would reduce nest predation risks (Discussion section, paragraph 1).  
 
 ## d.
 
