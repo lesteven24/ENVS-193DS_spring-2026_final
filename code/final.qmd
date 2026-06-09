@@ -110,13 +110,13 @@ Tree height is a continuous (numeric) variable and could influence the probabili
 ```{r}
 
 #model 0: all predictors, no interaction term
-model0 <- glm(case_control ~ height_cm + scientific_name,
+nest_model0 <- glm(case_control ~ height_cm + scientific_name,
   data = nests_clean,
 #response variable is binary so test should be logistic regression
   family = binomial)
 
 #model 1: all predictors, interaction term
-model1 <- glm(case_control ~ height_cm * scientific_name,
+nest_model1 <- glm(case_control ~ height_cm * scientific_name,
   data = nests_clean,
 #response variable is binary so test should be logistic regression
   family = binomial)
@@ -129,8 +129,8 @@ model1 <- glm(case_control ~ height_cm * scientific_name,
 
 #calculated AIC for each model
 AICc(
-  model0,
-  model1) |> 
+  nest_model0,
+  nest_model1) |> 
 #arranged output in order of AIC
   arrange(AICc)
 
@@ -140,7 +140,14 @@ The best model as determined by Akaike's Information Criterion (AIC) was the mod
 
 ## g. Check the diagnostics
 
+```{r}
 
+#checked diagnostics for model 1 using DHARMa residuals
+plot(simulateResiduals(nest_model1)) 
+
+```
+
+Most of the points on the QQ plot follow the reference line, so we can assume the data is roughly normally distributed.  We can only believe the observations collected were independent and the response and we already know the response variable will be distributed following a binomial distribution (0 or 1).  For the plot on the right, since it says that there are no significant problems detected, we can also assume that there is a linear relationship between transformed expected response (nest occurrence probability) in terms of link function and explanatory variables (tree height and ant species).  Therefore, all of the assumptions for a generalized linear model (GLM) are met.         
 
 ## h. Visualize the model predictions
 
