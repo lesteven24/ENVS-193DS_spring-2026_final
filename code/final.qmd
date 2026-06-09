@@ -154,7 +154,7 @@ plot(simulateResiduals(nest_model1))
 
 ```
 
-Most of the points on the QQ plot follow the reference line, so we can assume the data is roughly normally distributed.  We can only believe the observations collected were independent and the response and we already know the response variable will be distributed following a binomial distribution (0 or 1).  For the plot on the right, since it says that there are no significant problems detected, we can also assume that there is a linear relationship between transformed expected response (nest occurrence probability) in terms of link function and explanatory variables (tree height and ant species).  Therefore, all of the assumptions for a generalized linear model (GLM) are met.         
+Most of the points on the QQ plot follow the reference line, so we can assume the data is roughly normally distributed.  We can only believe the observations collected were independent and the response and we already know the response variable will be distributed following a binomial distribution (0 or 1).  For the plot on the right, since it says there are no significant problems detected, we can also assume there is a linear relationship between transformed expected response (nest occurrence probability) in terms of link function and explanatory variables (tree height and ant species).  Therefore, all of the assumptions for a generalized linear model (GLM) are met.         
 
 ## h. Visualize the model predictions
 
@@ -177,9 +177,7 @@ ggplot(data = nests_clean,
   labs(x = "Tree Height (cm)",
        y = "Nest Occurrence Probability",
 #colored by ant species
-       color = "scientific_name", 
-#added title to figure
-       title = "Bird Nest Presence by Acacia Ant Species and Tree Height") + 
+       color = "scientific_name") + 
 #changed colors for each ant species plot
   scale_color_manual(values = c("Crematogaster sjostedti" = "darkred",
                                 "Crematogaster mimosae" = "navyblue",
@@ -234,13 +232,21 @@ theme(panel.background = element_blank(),
 
 ```
 
-## i. Write a caption for your figure 
+## i. Write a caption for your figure
 
-
+**Figure 1.  Probability of bird nest occurrence varies based on the acacia ant species and height of the tree.**  Each panel represents the data for each of the three acacia ant species, which are differentiated by colors (red: *Crematogaster sjostedti*, blue: *Crematogaster mimosae*, gold: *Crematogaster nigriceps*).  Points represent observations of nest occurrence based on the height of the tree (cm) for each acacia ant species.  Lines in each panel represent the model predictions (predicted probability) for nest occurrence based on the height of the tree (cm) and ribbons represent the 95% confidence interval for each species.  Data originally from: Lujan, E., Nielsen, R., Short, Z., Wicks, S., Nderitu Watetu, W., Malingati Khasoha, L., Palmer, T. M., Goheen, J. R., & Alston, J. M. (2023). Data, code, and metadata for: Symbiotic acacia ants drive nesting behavior by birds in an African savanna [Data set]. Zenodo. https://doi.org/10.5281/zenodo.8373322.
 
 ## j. Calculate model predictions
 
+```{r}
 
+#calculating nest occurrence from model1 for each ant species
+ggpredict(nest_model1, 
+#predictors but set height to 600cm 
+  terms = c("height_cm[600]",
+            "scientific_name"))
+
+```
 
 ## k. Interpret your results 
 
