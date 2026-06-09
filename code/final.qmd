@@ -15,7 +15,7 @@ include-in-header:
         \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
 ---
 
-[GitHub repo link](https://github.com/lesteven24/ENVS-193DS_spring-2026_final.git)
+[GITHUB REPOSITORY LINK HERE](https://github.com/lesteven24/ENVS-193DS_spring-2026_final.git)
 
 # Homework set up
 
@@ -82,7 +82,12 @@ nests_clean <- nests |>
   mutate(scientific_name = case_match(ant_species,
     "AB" ~ "Crematogaster sjostedti",
     "RRB" ~ "Crematogaster mimosae",
-    "BBR" ~ "Crematogaster nigriceps")) 
+    "BBR" ~ "Crematogaster nigriceps")) |> 
+#reordered full scientific name of ant species
+  mutate(scientific_name = factor(scientific_name, 
+                                  levels = c("Crematogaster sjostedti", 
+                                             "Crematogaster mimosae",
+                                             "Crematogaster nigriceps"))) 
 #displayed structure of nests_clean data frame
 str(nests_clean)
 #displayed 10 random rows from the data frame but made it separate from all codes above by using separate pipe operator 
@@ -153,7 +158,81 @@ Most of the points on the QQ plot follow the reference line, so we can assume th
 
 ## h. Visualize the model predictions
 
+```{r}
 
+#created new object called preds 
+preds <- ggpredict(nest_model1,
+#predictors
+                   terms = c("height_cm[all]",
+                             "scientific_name")) 
+#added scientific_name column for visualization
+preds$scientific_name <- preds$group
+
+#base layer: ggplot
+ggplot(data = nests_clean,
+       mapping = aes(x = height_cm,
+                     y = case_control,
+                     color = as.factor(scientific_name))) +
+#relabelled x- and y-axes
+  labs(x = "Tree Height (cm)",
+       y = "Nest Occurrence Probability",
+#colored by ant species
+       color = "scientific_name", 
+#added title to figure
+       title = "Bird Nest Presence by Acacia Ant Species and Tree Height") + 
+#changed colors for each ant species plot
+  scale_color_manual(values = c("Crematogaster sjostedti" = "darkred",
+                                "Crematogaster mimosae" = "navyblue",
+                                "Crematogaster nigriceps" = "darkgoldenrod")) +
+  scale_fill_manual(values = c("Crematogaster sjostedti" = "orangered",
+                                "Crematogaster mimosae" = "blue",
+                                "Crematogaster nigriceps" = "yellow4")) +
+#used a different theme from default  
+  theme_minimal() +
+#removed background
+theme(panel.background = element_blank(),
+#removed major gridlines      
+        panel.grid.major = element_blank(),
+#removed minor gridlines      
+        panel.grid.minor = element_blank(),
+#removed legend      
+        legend.position = "none",
+#added borders to each panel
+        panel.border = element_rect(color = "black",
+                                    fill = NA, 
+                                    linewidth = 0.5),
+#added borders to each ant species name title
+        strip.background = element_rect(color = "black", 
+                                        fill = "white", 
+                                        linewidth = 0.5)) +
+#first layer: geom point
+  geom_point(mapping = aes(x = height_cm, #x-axis: tree height
+                           y = case_control, #y-axis: nest occurrence
+                           color = scientific_name), #set to selected colors
+#changed shape
+             shape = 21,  
+#made slightly transparent
+             alpha = 0.4, 
+#ignored global aes for colors
+             inherit.aes = FALSE) + 
+#second layer: geom line
+  geom_line(data = preds, #data from model 1 prediction
+            mapping = aes(x = x, #x-axis: tree height
+                          y = predicted, #y-axis: nest probability
+                          color = group), #colored by ant species
+            linewidth = 1) +
+#third layer: CI ribbon
+  geom_ribbon(data = preds, #data from model 1 prediction
+              mapping = aes(x = x, #x-axis: tree height
+                            ymin = conf.low, #set low value
+                            ymax = conf.high, #set high value
+                            fill = group), #filled by ant species
+              inherit.aes = FALSE, #ignored global aes       
+              alpha = 0.1) + #made transparent
+#made new panel for each ant species
+  facet_wrap(~ scientific_name)
+
+```
 
 ## i. Write a caption for your figure 
 
