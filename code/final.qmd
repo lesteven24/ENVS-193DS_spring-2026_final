@@ -30,6 +30,9 @@ library(ggplot2)
 library(ggeffects)
 library(flextable)
 library(here)
+library(MuMIn)
+library(DHARMa)
+library(rstatix)
 #stored nest data as an object called nests
 nests <- read_csv(here("data", "nest_data_final.csv"))
 
@@ -97,15 +100,43 @@ Tree height is a continuous (numeric) variable and could influence the probabili
 
 ## d.
 
-
+| Model number | Tree height | Ant species |            Model description             |
+|--------------|:-----------:|:-----------:|:---------------------------------------: |  
+| 0            |      X      |      X      | All predictors (no interaction term, +)  |
+| 1            |      X      |      X      | All predictors (interaction term, *)     | 
 
 ## e.
 
+```{r}
 
+#model 0: all predictors, no interaction term
+model0 <- glm(case_control ~ height_cm + scientific_name,
+  data = nests_clean,
+#response variable is binary so test should be logistic regression
+  family = binomial)
+
+#model 1: all predictors, interaction term
+model1 <- glm(case_control ~ height_cm * scientific_name,
+  data = nests_clean,
+#response variable is binary so test should be logistic regression
+  family = binomial)
+
+```
 
 ## f.
 
+```{r}
 
+#calculated AIC for each model
+AICc(
+  model0,
+  model1) |> 
+#arranged output in order of AIC
+  arrange(AICc)
+
+```
+
+The best model as determined by Akaike's Information Criterion (AIC) was the model where tree height (cm) and acacia ant species were interacting terms for the probability of nest occurrence.  
 
 ## g.
 
