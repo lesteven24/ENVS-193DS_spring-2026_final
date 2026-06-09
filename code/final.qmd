@@ -141,6 +141,8 @@ The best model as determined by Akaike's Information Criterion (AIC) was the mod
 ## g. Check the diagnostics
 
 ```{r}
+#| fig-width: 8
+#| fig-height: 5
 
 #checked diagnostics for model 1 using DHARMa residuals
 plot(simulateResiduals(nest_model1)) 
