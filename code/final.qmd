@@ -250,7 +250,7 @@ ggpredict(nest_model1,
 
 ## k. Interpret your results 
 
-
+If we were looking at the tallest tree, which is 600 cm, the predicted probability of nest site occupancy would be 0.2 (95% CI: [0.00, 0.99]) when *Crematogaster sjostedti* are present, 0.74 (95% CI: [0.48, 0.90]) when *Crematogaster mimosae* are present, and 1.00 (95% CI: [1.00, 1.00]) when *Crematogaster nigriceps* are present.  In Figure 1, by looking at the lines from each panel, there seems to be a positive correlation for all three acacia ant species where as the tree height (cm) increases, the probability of a bird nest occurrence increases as well.  However, this is more strongly displayed in trees that had either *Crematogaster mimosae* or *Crematogaster nigriceps* as their predicted values for nest occurrence probabilty for a tree at 600 cm were 0.74 and 1.00, respectively, which was much higher than a 600 cm tree that had *Crematogaster sjostedti* as its nest occurrence probability was 0.2.  Therefore, acacia trees with either *Crematogaster mimosae* or *Crematogaster nigriceps* seem to be preferred by birds for nesting sites as those two ant species are  a lot more aggressive defenders, reducing nest predation rates and thereby increase bird fitness in comparison to the less aggressive *Crematogaster sjostedti*.  Furthermore, trees with *Crematogaster nigriceps* in particular usually have denser canopies because of the species' role in pruning apical buds, so this denser leafage makes it more appealing to birds looking to make nests in much more covered canopies.    
 
 # Problem 3. Affective and exploratory visualizations 
 
