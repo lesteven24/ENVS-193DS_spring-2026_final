@@ -35,6 +35,8 @@ library(DHARMa)
 library(rstatix)
 #stored nest data as an object called nests
 nests <- read_csv(here("data", "nest_data_final.csv"))
+#stored personal data as an object called personal
+personal <- read_csv(here("data", "personal_data.csv"))
 
 ```
 
@@ -256,19 +258,118 @@ If we were looking at the tallest tree, which is 600 cm, the predicted probabili
 
 ## a. Comparing visualizations
 
-
+- My visualizations are different from each other since for my scatterplot figure originally, I made it as smoothed out version of a histogram, which did not look right since the plot looked more like a heart rate monitor.  In addition, the bar chart I made in Homework 2 was a lot more different than what it turned out to be in my affective visualization since the distribution changed between those weeks as I collected more data.  Overall, the designs did change somewhat as I received feedback on how to make my histogram into a scatterplot, which I added into my affective visualization as individual points rather than a line.
+- The similarities I seee between all of my visualizations are that the expected results remained relatively similar and the variables did not change at all.  Looking at my visualization during the week I was doing Homework 2, I decided to continue with the same variables, only changing the histogram into a scatterplot, so I knew what the distribution was going to look like even before making my affective visualization.
+- Patterns I see in my visualizations from Homework 2 are that for the bar chart, the weather I refilled my water bottle the most times in was sunny, which was expected, and for the scatterplot (technically a smoothed out histogram at the time), the frequency was a bit more random at different temperatures.  However, it was different between visualizations as the in the bar chart, frequency of refilling my water bottle for cloudy and night weather conditions increased far more than windy weather by the time I got to my affective visualization.  Additionally, I decided to convert the smoothed out histogram from Homework 2 into a scatterplot, so it looked a lot different on the affective visualization as it became individual points on my visual instead.
+- The main type of feedback I received during week 9 in workshop was to enlarge my affective visualization in order to fill in a lot of the remaining white space of my drawing.  I was able to implement this feedback by redrawing my sketch completely and for the remaining white space I did have, I colored it in with colors I felt emphasized the theme of my affective visualization.  This helped a lot since I kept the foundation of my first draft sketch the same, but I refined it with different colors and designs for my figures on the affective visualization.   
 
 ## b. Designing an analysis
 
-
+One analysis I could apply to answer my research question (How does temperature influence how often I refill my water bottle?) is a single linear regression with a Spearman rank correlation test.  Since my research question only looks at one predictor and one response variable, a single linear regression is the most effective type of analysis.  Additionally, the frequency I refill my water bottle is a discrete (integer/count) variable and temperature is a continuous (numeric) variable.  Therefore, a Spearman rank correlation test works well as a follow-up test as it is a non-parametric test and identifies monotonic relationships between variables, which works well for discrete variables.
 
 ## c. Check any assumptions and run your analysis
 
+### Checking assumptions.
 
+Before fitting a model, I would expect a linear relationship between temperature and the frequency that I refill my water bottle.  Additionally, I would expect independent errors, so an error from one observation I record would not influence error from another observation.
+
+```{r}
+
+#created new object from personal
+personal_clean <- personal |>
+#cleaned column names    
+  clean_names()
+
+#created a new data frame that counts the frequencies
+summarized_personal <- personal_clean |> 
+  group_by(temperature_f) |> 
+  summarize(frequency = n())
+
+personal_visual <- lm(frequency ~ temperature_f, #formula: change in refill frequency as a function of temperature 
+  data = summarized_personal) #data frame: summarized_personal data
+
+```
+
+```{r}
+
+#displayed plots in a 2x2 grid
+par(mfrow = c(2, 2))
+#displayed diagnostic plots
+plot(personal_visual)
+
+```
+
+For the QQ plot, most of the points follow the reference line, so we can assume the data is roughly normally distributed.  Furthermore, in the residuals vs. fitted and scale-location plots, the residual points are somewhat evenly and randomly distributed around the given horizontal dotted line.  Therefore, all our assumptions, including the ones checked before fitting the model, have been checked for running a single linear regression model.    
+
+### Running analysis.
+
+```{r}
+
+#added more information about the model
+summary(personal_visual)
+
+#ran a correlation test between temperature and refill frequency
+cor.test(summarized_personal$temperature_f, summarized_personal$frequency,
+#used Spearman rank correlation test as our method         
+         method = "spearman")
+
+```
 
 ## d. Create a visualization
 
+```{r}
 
+#creating a new object called abalone_preds
+visual_preds <- ggpredict(
+#model object
+  personal_visual,      
+#predictor
+  terms = "temperature_f")
+
+#displayed predictions
+visual_preds
+
+```
+
+```{r}
+
+#base layer: ggplot
+#used summarized data frame
+ggplot(data = summarized_personal,
+       aes(x = temperature_f,
+           y = frequency)) +
+#first layer: points representing individual refills
+  geom_point(size = 4,
+             stroke = 1,
+             fill = "darkgreen",
+             shape = 21) +
+#second layer: ribbon representing confidence interval
+#used predictions data frame
+  geom_ribbon(data = visual_preds,
+              aes(x = x,
+                  y = predicted,
+                  ymin = conf.low,
+                  ymax = conf.high),
+              alpha = 0.1) +
+#third layer: line representing model predictions
+#used predictions data frame
+  geom_line(data = visual_preds,
+            aes(x = x,
+                y = predicted)) +
+#changed axis labels
+  labs(x = "Temperature (°F)", 
+       y = "Frequency of Refilling Bottle") +
+#changed theme from default
+  theme_minimal()
+
+```
+
+```{r}
+
+#displayed table with model coefficients, 95% confidence intervals, and more
+as_flextable(personal_visual)
+
+```
 
 ## e. Write a caption
 
