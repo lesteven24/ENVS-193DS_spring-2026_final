@@ -290,12 +290,14 @@ personal_visual <- lm(frequency ~ temperature_f, #formula: change in refill freq
 
 ```
 
-```{r}
+```{r, fig.width=8, fig.height=5}
 
 #displayed plots in a 2x2 grid
-par(mfrow = c(2, 2))
+par(mfrow = c(2, 2), cex = 0.7)
 #displayed diagnostic plots
 plot(personal_visual)
+#adjusted size and text of visuals
+par(mfrow = c(1, 1), cex = 1)
 
 ```
 
@@ -315,8 +317,6 @@ cor.test(summarized_personal$temperature_f, summarized_personal$frequency,
 
 ```
 
-## d. Create a visualization
-
 ```{r}
 
 #creating a new object called abalone_preds
@@ -330,6 +330,15 @@ visual_preds <- ggpredict(
 visual_preds
 
 ```
+
+```{r}
+
+#displayed table with model coefficients, 95% confidence intervals, and more
+as_flextable(personal_visual)
+
+```
+
+## d. Create a visualization
 
 ```{r}
 
@@ -350,7 +359,8 @@ ggplot(data = summarized_personal,
                   y = predicted,
                   ymin = conf.low,
                   ymax = conf.high),
-              alpha = 0.1) +
+              alpha = 0.1,
+              fill = "green") +
 #third layer: line representing model predictions
 #used predictions data frame
   geom_line(data = visual_preds,
@@ -360,24 +370,22 @@ ggplot(data = summarized_personal,
   labs(x = "Temperature (°F)", 
        y = "Frequency of Refilling Bottle") +
 #changed theme from default
-  theme_minimal()
-
-```
-
-```{r}
-
-#displayed table with model coefficients, 95% confidence intervals, and more
-as_flextable(personal_visual)
+  theme_minimal() +
+#removed panel background  
+  theme(panel.background = element_blank()) + 
+#removed major and minor gridlines   
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank())
 
 ```
 
 ## e. Write a caption
 
-
+**Figure 2. Frequency of refilling my water bottle based on the temperature at the time of observation**  Points (dark green) represent frequency of water bottle being refilled and the temperature (°F) from 4/26-5/27/2026.  Line represents the model predictions for refill frequency based on the temperature and ribbon (green) represents the 95% confidence interval.
 
 ## f. Write about your results
 
-
+For our highest temperature value from Figure 2 (74 °F), the predicted probability of water bottle refill frequency would be 6.42 (95% CI: [3.03, 9.81]).  From our model coefficient estimates, we found that for each 1 °F increase in temperature, water bottle refill frequency increases 0.015 $\pm$ 0.127.  However, the Spearman rank correlation value was roughly 0.062, so there seems to be almost no relationship between temperature (°F) and water bottle refill frequency (Spearman $\rho$ = 0.062, S = 1898, p = 0.78, $\alpha$ = 0.05).      
 
 ## g. Sharing your affective visualization 
 
